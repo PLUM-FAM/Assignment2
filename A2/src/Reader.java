@@ -4,44 +4,44 @@ import java.util.Scanner;
 
 public class Reader 
 {
-	public char[][] readMaze(String filename)
+	public static char[][] readFile(String filename)
 	{
 			char[][] maze;
 			int width;
 			int height;
 			
+			int k;
 			if(filename.equals("5x5maze"))
 			{
-				maze = new char[20][37];
-				width = 20;
-				height = 37;
+				k = 5;
 			}
 			else if(filename.equals("7x7maze"))
 			{
-				maze = new char[23][61];
-				width = 23;
-				height = 61;
+				k = 7;
 			}else if(filename.equals("8x8maze"))
 			{
-				maze = new char[31][81];
-				width = 31;
-				height = 81;
+				k = 8;
 			}else if(filename.equals("9x9maze"))
 			{
-				
+				k = 9;
 			}else if(filename.equals("10x10maze"))
 			{
-				
+				k = 10;
 			}else if(filename.equals("12x12maze"))
 			{
-				
+				k = 12;
 			}else if(filename.equals("13x14maze"))
 			{
-				
+				k = 14;
 			}else
 			{
+				k = 0;
 				System.out.println("error reading file");
 			}
+			
+			maze = new char[k][k];
+			width = k;
+			height = k;	
 			
 			try {
 				Scanner in = new Scanner(new FileReader(filename));
