@@ -11,32 +11,32 @@ public class Reader
 			int height;
 			
 			int k;
-			if(filename.equals("5x5maze"))
+			if(filename.equals("5x5maze.txt"))
 			{
 				k = 5;
 			}
-			else if(filename.equals("7x7maze"))
+			else if(filename.equals("7x7maze.txt"))
 			{
 				k = 7;
-			}else if(filename.equals("8x8maze"))
+			}else if(filename.equals("8x8maze.txt"))
 			{
 				k = 8;
-			}else if(filename.equals("9x9maze"))
+			}else if(filename.equals("9x9maze.txt"))
 			{
 				k = 9;
-			}else if(filename.equals("10x10maze"))
+			}else if(filename.equals("10x10maze.txt"))
 			{
 				k = 10;
-			}else if(filename.equals("12x12maze"))
+			}else if(filename.equals("12x12maze.txt"))
 			{
 				k = 12;
-			}else if(filename.equals("13x14maze"))
+			}else if(filename.equals("14x14maze.txt"))
 			{
 				k = 14;
 			}else
 			{
 				k = 0;
-				System.out.println("error reading file");
+				System.out.println("error reading filename");
 			}
 			
 			maze = new char[k][k];
@@ -45,7 +45,6 @@ public class Reader
 			
 			try {
 				Scanner in = new Scanner(new FileReader(filename));
-				System.out.println("");
 				for(int i = 0; i < width; i++)	//for each col.
 				{
 					String line = in.next();	//for each line
