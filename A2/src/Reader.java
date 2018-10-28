@@ -66,34 +66,41 @@ public class Reader
 						
 						if(maze[i][j].value != '_')
 						{
+							if(possibleColorsForMaze.contains(maze[i][j].value) != true) //if not already added
 							//add to list of possible colors for this maze
 							possibleColorsForMaze.add(maze[i][j].value);
 						}
 					}
 				}
 				
-				initializePossible(maze);
-				
 				//set possible values for each node based on the colors used in the maze
+				for(int i = 0; i < width; i++)
+				{
+					for(int j = 0; j < height; j++)
+					{
+						if(maze[i][j].value != '_') //sets for EVERYTHING but _ 
+						{
+							for(int l = 0; l < (possibleColorsForMaze.size()); l++)
+							{
+								maze[i][j].possible.add(possibleColorsForMaze.get(i));
+							}
+						}
+					}
+				}
+				
+				
+				//debug printing:
+				for(k = 0; k < (possibleColorsForMaze.size()); k++)
+				{
+					System.out.println("possible color" + possibleColorsForMaze.get(k));
+				}
+				
 			}
+			
 			catch(IOException e)
 			{
 				System.out.println("Error reading file");
 			}
 			return maze;
 	}
-
-	
-	//set the possible values for each node in maze based on what the node is currently and whats around it
-	public void initializePossible(Node[][] maze) 
-	{
-		for(int i = 0; i < width; i++)	//for each col.
-		{
-			for(int j = 0; j < height; j++)
-			{
-				
-			}
-		}
-	}
-	
 }
