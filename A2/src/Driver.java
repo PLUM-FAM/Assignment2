@@ -5,29 +5,43 @@ public class Driver {
 	public static void main(String args[])
 	{
 		Reader r = new Reader();
-		
-		char[][] five = Reader.readFile("5x5maze.txt");
-		char[][] seven = Reader.readFile("7x7maze.txt");
-		char[][] eight = Reader.readFile("8x8maze.txt");
-		char[][] nine = Reader.readFile("9x9maze.txt");
-		char[][] ten = Reader.readFile("10x10maze.txt");
-		char[][] twelve = Reader.readFile("12x12maze.txt");
-		char[][] fourteen = Reader.readFile("14x14maze.txt");
-		
-		printMaze(5,five);
-		printMaze(7,seven);
-		
-	}
-	
-	private static void printMaze(int x, char[][] maze) {
-		System.out.println("\nMaze " + x + ": ");
-		for(int i = 0; i < x-1; i++)
+		String fileName = args[0];
+		int size;
+		switch(fileName)
 		{
-			for(int j = 0; j < x-1; j++)
-			{
-				System.out.print(maze[j][i]);
-			}
-			System.out.println("");
+		case "5x5maze.txt":
+			size =  5;
+			break;
+		case "7x7maze.txt":
+			size = 7;
+			break;
+		case "8x8maze.txt":
+			size = 8;
+			break;
+		case "9x9maze.txt":
+			size = 9;
+			break;
+		case "10x10maze.txt":
+			size = 10;
+			break;
+		case "11x11maze.txt":
+			size = 11;
+			break;
+		case "12x12maze.txt":
+			size = 12;
+			break;
+		default:
+			size = -1;
+			System.out.println("invalid file name");
+			break;
 		}
-	}
+		char[][] maze = Reader.readFile(fileName);
+		System.out.println("loaded " + fileName);
+		System.out.println("size = " + size);
+		
+		//first solve with our "dumb implementation"
+		DumbSolver DumbResult = new DumbSolver(size, maze);
+		
+		
+	}	
 }
