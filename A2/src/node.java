@@ -2,10 +2,16 @@
 public class node 
 {
 	//value, x coord, y coord
-	//for not dumb will need a constricted value
+	
+	
+	public int x;
+	public int y;
+	public char value;
 	//constructor
-	public node()
+	public node(int x ,int y, char value)
 	{
-		
+		this.x = x;
+		this.y = y;
+		this.value = value;
 	}
 }

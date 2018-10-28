@@ -35,9 +35,11 @@ public class Driver {
 			System.out.println("invalid file name");
 			break;
 		}
-		char[][] maze = Reader.readFile(fileName);
+		node[][] maze = Reader.readFile(fileName);
 		System.out.println("loaded " + fileName);
 		System.out.println("size = " + size);
+		
+		
 		
 		//first solve with our "dumb implementation"
 		DumbSolver DumbResult = new DumbSolver(size, maze);

@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Reader 
 {
-	public static char[][] readFile(String filename)
+	public static node[][] readFile(String filename)
 	{
-			char[][] maze;
+			node[][] maze;
 			int width;
 			int height;
 			
@@ -39,9 +39,9 @@ public class Reader
 				System.out.println("error reading filename");
 			}
 			
-			maze = new char[k][k];
+			maze = new node[k][k];
 			width = k;
-			height = k;	
+			height = k;
 			
 			try {
 				Scanner in = new Scanner(new FileReader(filename));
@@ -51,7 +51,8 @@ public class Reader
 		
 					for(int j = 0; j < height; j++)
 					{
-						maze[i][j] = line.charAt(j); //the next spot in the 2d array is the next character in the text file.
+						char value = line.charAt(j); //the next spot in the 2D array is the next character in the text file.
+						maze[i][j] = new node(i,j, value);
 					}
 				}
 			}
