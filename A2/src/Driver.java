@@ -6,6 +6,9 @@ public class Driver {
 	{
 		Reader r = new Reader();
 		String fileName = args[0];
+		//int size = Integer.parseInt(args[1]);
+		
+		//determine size from filename
 		int size;
 		switch(fileName)
 		{
@@ -35,7 +38,9 @@ public class Driver {
 			System.out.println("invalid file name");
 			break;
 		}
-		node[][] maze = Reader.readFile(fileName);
+		
+		//read in file to a 2D array of nodes to represent the maze.
+		Node[][] maze = Reader.readFile(fileName);
 		System.out.println("loaded " + fileName);
 		System.out.println("size = " + size);
 		
@@ -43,6 +48,8 @@ public class Driver {
 		
 		//first solve with our "dumb implementation"
 		DumbSolver DumbResult = new DumbSolver(size, maze);
+		
+		//then solve with our "smart implementation"
 		
 		
 	}	

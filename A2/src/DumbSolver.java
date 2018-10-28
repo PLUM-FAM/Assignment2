@@ -1,11 +1,11 @@
 import java.util.*;
 public class DumbSolver {
-	private int size;
-	private node[][] maze;
+	final private int size;
+	final private Node[][] maze; //orig maze
 	
 	
 	//Dumb solver with random variable and value ordering (no forward checking).
-	public DumbSolver(int size, node[][] maze)
+	public DumbSolver(int size, Node[][] maze)
 	{
 		System.out.println("---------------------------------- ");
 		System.out.println("Started dumb solver for maze size: " + size);
@@ -13,7 +13,7 @@ public class DumbSolver {
 		printMaze(size, maze);
 		this.size = size;
 		this.maze = maze;
-		node[][] solvedMaze = solve(maze);
+		Node[][] solvedMaze = solve(maze);
 		
 		System.out.println("Dumb Solver Solved Maze : ");
 		printMaze(size, solvedMaze);
@@ -43,17 +43,16 @@ public class DumbSolver {
 				BT(Level+1)
 		return
 	*/
-	public node[][] solve(node[][] orig) 
+	public Node[][] solve(Node[][] orig) 
 	{
-		node[][] currentMaze = orig;
+		Node[][] currentMaze = orig; //current maze
+	
 		return currentMaze;
 	}
 	
 	
-	
-	
 	//helper method for printing 2D arrays.
-		private void printMaze(int x, node[][] maze) {
+		private void printMaze(int x, Node[][] maze) {
 			System.out.println("\nMaze " + x + ": ");
 			for(int i = 0; i < x-1; i++)
 			{

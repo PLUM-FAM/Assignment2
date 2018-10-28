@@ -1,14 +1,11 @@
 
-public class node 
+public class Node 
 {
-	//value, x coord, y coord
-	
-	
 	public int x;
 	public int y;
 	public char value;
 	//constructor
-	public node(int x ,int y, char value)
+	public Node(int x ,int y, char value)
 	{
 		this.x = x;
 		this.y = y;

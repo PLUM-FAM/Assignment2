@@ -1,0 +1,6 @@
+Resources:
+
+
+Backtracking:
+	https://www.geeksforgeeks.org/sudoku-backtracking-7/
+	https://www.cs.toronto.edu/~sheila/384/w11/Lectures/csc384w11-Lecture-04-Backtracking-Search-4pp.pdf
