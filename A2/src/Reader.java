@@ -1,14 +1,23 @@
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Reader 
 {
-	public static Node[][] readFile(String filename)
+	Node[][] maze;
+	int width;
+	int height;
+	ArrayList<Character> possibleColorsForMaze = new ArrayList<Character>();
+	String fileName;
+	
+	public Reader()
 	{
-			Node[][] maze;
-			int width;
-			int height;
+		
+	}
+	
+	public Node[][] readFile(String filename)
+	{
 			
 			int k;
 			if(filename.equals("5x5maze.txt"))
@@ -52,16 +61,39 @@ public class Reader
 					for(int j = 0; j < height; j++)
 					{
 						char value = line.charAt(j); //the next spot in the 2D array is the next character in the text file.
-						maze[i][j] = new Node(i,j, value);
-						//TODO? assign an array of possible values for constrictions?
+						ArrayList<Character> possible = new ArrayList<Character>(); //possible colors for the current node. initially empty
+						maze[i][j] = new Node(i,j, value, possible);
+						
+						if(maze[i][j].value != '_')
+						{
+							//add to list of possible colors for this maze
+							possibleColorsForMaze.add(maze[i][j].value);
+						}
 					}
 				}
+				
+				initializePossible(maze);
+				
+				//set possible values for each node based on the colors used in the maze
 			}
 			catch(IOException e)
 			{
 				System.out.println("Error reading file");
 			}
 			return maze;
+	}
+
+	
+	//set the possible values for each node in maze based on what the node is currently and whats around it
+	public void initializePossible(Node[][] maze) 
+	{
+		for(int i = 0; i < width; i++)	//for each col.
+		{
+			for(int j = 0; j < height; j++)
+			{
+				
+			}
+		}
 	}
 	
 }

@@ -40,7 +40,8 @@ public class Driver {
 		}
 		
 		//read in file to a 2D array of nodes to represent the maze.
-		Node[][] maze = Reader.readFile(fileName);
+		Reader read = new Reader(); 
+		Node[][] maze = r.readFile(fileName);
 		System.out.println("loaded " + fileName);
 		System.out.println("size = " + size);
 		

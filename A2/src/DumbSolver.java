@@ -53,6 +53,9 @@ public class DumbSolver {
 				finished = true;
 				break;
 			}
+			
+			//pick a random variable to use
+			
 		}
 		return currentMaze;
 	}
