@@ -21,7 +21,6 @@ public class DumbSolver {
 
 	}
 	
-	
 	/*
 	 * BT(Level)
 		If all variables assigned
@@ -46,11 +45,32 @@ public class DumbSolver {
 	public Node[][] solve(Node[][] orig) 
 	{
 		Node[][] currentMaze = orig; //current maze
-	
+		boolean finished = false;
+		while(!finished)
+		{
+			if(finishCheck(currentMaze,size)) //finish check for end
+			{
+				finished = true;
+				break;
+			}
+		}
 		return currentMaze;
 	}
-	
-	
+
+
+	public boolean finishCheck(Node[][] m, int x)
+	{
+		for(int i = 0; i < x-1; i++)
+		{
+			for(int j = 0; j < x-1; j++)
+			{
+				if(maze[j][i].value == '_')
+				{return true;}
+			}
+		}
+		return false;
+	}
+		
 	//helper method for printing 2D arrays.
 		private void printMaze(int x, Node[][] maze) {
 			System.out.println("\nMaze " + x + ": ");
