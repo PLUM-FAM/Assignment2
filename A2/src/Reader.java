@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,49 +11,20 @@ public class Reader
 	int height;
 	ArrayList<Character> possibleColorsForMaze = new ArrayList<Character>();
 	String fileName;
+	int size = 0;
 	
 	public Reader()
 	{
 		
 	}
 	
-	public Node[][] readFile(String filename)
+	public Node[][] readFile(String filename, int size)
 	{
-			
-			int k;
-			if(filename.equals("5x5maze.txt"))
-			{
-				k = 5;
-			}
-			else if(filename.equals("7x7maze.txt"))
-			{
-				k = 7;
-			}else if(filename.equals("8x8maze.txt"))
-			{
-				k = 8;
-			}else if(filename.equals("9x9maze.txt"))
-			{
-				k = 9;
-			}else if(filename.equals("10x10maze.txt"))
-			{
-				k = 10;
-			}else if(filename.equals("12x12maze.txt"))
-			{
-				k = 12;
-			}else if(filename.equals("14x14maze.txt"))
-			{
-				k = 14;
-			}else
-			{
-				k = 0;
-				System.out.println("error reading filename");
-			}
-			
-			maze = new Node[k][k];
-			width = k;
-			height = k;
-			
-			try {
+		try {			
+			maze = new Node[size][size];
+			width = size;
+			height = size;
+				
 				Scanner in = new Scanner(new FileReader(filename));
 				for(int i = 0; i < width; i++)	//for each col.
 				{
@@ -82,19 +54,11 @@ public class Reader
 						{
 							for(int l = 0; l < (possibleColorsForMaze.size()); l++)
 							{
-								maze[i][j].possible.add(possibleColorsForMaze.get(i));
+								maze[i][j].possible.add(possibleColorsForMaze.get(l));
 							}
 						}
 					}
-				}
-				
-				
-				//debug printing:
-				for(k = 0; k < (possibleColorsForMaze.size()); k++)
-				{
-					System.out.println("possible color" + possibleColorsForMaze.get(k));
-				}
-				
+				}		
 			}
 			
 			catch(IOException e)
@@ -102,5 +66,7 @@ public class Reader
 				System.out.println("Error reading file");
 			}
 			return maze;
-	}
+	}	
 }
+	
+
