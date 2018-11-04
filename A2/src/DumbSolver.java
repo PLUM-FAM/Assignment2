@@ -6,6 +6,8 @@ public class DumbSolver {
 	Reader reader = new Reader();
 	Random rand = new Random();
 	
+	private Stack <Node> s = new Stack<>();
+	
 	private int[][] startColor;
 	private int[][] endColor;
 	
@@ -114,6 +116,36 @@ public class DumbSolver {
 				System.out.println("");
 			}
 			System.out.println("");
+		}
+		
+		private void dumbSearch(char[][] maze, char color)
+		{
+			//capitolize color char = end node check thing
+			char GoalColor = Character.toUpperCase(color);
+			
+			//random number for nsew
+			
+			//check direction
+				//if capitol  then return true break out.
+				//if open then "place lower case there" and change current location to that location.
+				//if not valid check another random. (up to 4 directions)
+			
+			//backtrack the current color. reset(color)
+		}
+				
+		
+		
+		//checking the coord x,y to see if it is free
+		private boolean isFree(Node[][] maze, int size, int x, int y)
+		{
+			if((x >= 0 && x < size) && (y>=0 && y < size)) //if coord is within the bounds of the maze
+			{
+				if(maze[x][y].value == '_')
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 }
 
