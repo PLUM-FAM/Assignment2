@@ -14,12 +14,23 @@ public class Driver {
 		System.out.println("loaded " + fileName);
 		System.out.println("size = " + size);
 		
+		if(args[2].equals("d"))
+		{
+			//solve with our "dumb implementation"
+			System.out.println("Solving with dumb solver");
+			DumbSolver DumbResult = new DumbSolver(size, maze);
+		}else if(args[2].equals("s"))
+		{
+			//solve with our "smart implementation"
+			System.out.println("Solving with smart solver");
+			//SmartSolver SmartResult = new SmartSolver(size,maze);
+		}else
+		{
+			System.out.println("error loading solver type with input " + args[2]);
+		}
 		
 		
-		//first solve with our "dumb implementation"
-		DumbSolver DumbResult = new DumbSolver(size, maze);
 		
-		//then solve with our "smart implementation"
 		
 		
 	}	
