@@ -2,7 +2,12 @@ import java.util.*;
 public class DumbSolver {
 	final private int size;
 	final private Node[][] maze; //orig maze
+
+	Reader reader = new Reader();
+	Random rand = new Random();
 	
+	private int[][] startColor;
+	private int[][] endColor;
 	
 	//Dumb solver with random variable and value ordering (no forward checking).
 	public DumbSolver(int size, Node[][] maze)
@@ -55,9 +60,32 @@ public class DumbSolver {
 			}
 			
 			//pick a random variable to use
-			
+			int randomColor = rand.nextInt(reader.possibleColorsForMaze.length);
+			char color = reader.possibleColorsForMaze.get(randomColor);
+			for(int i = 0; i++; i <= maze.length)
+			{
+				for(int j = 0; j++; j <= maze[0].length)
+				{
+					if(maze[i][j] == color)
+					{
+						
+					}
+				}
+			}
 		}
 		return currentMaze;
+	}
+
+	public boolean solveUtil()
+	{
+		if(solveUtil)
+		{
+			return true;
+		}
+		else
+		{
+			maze[][] = -1;
+		}
 	}
 
 
