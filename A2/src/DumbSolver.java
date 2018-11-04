@@ -2,14 +2,12 @@ import java.util.*;
 public class DumbSolver {
 	final private int size;
 	final private Node[][] maze; //orig maze
+	
+    private Stack<Character> colorsFilled = new Stack<>(); //stack to keep track of colors completed so we can back track.
+
 
 	Reader reader = new Reader();
 	Random rand = new Random();
-	
-	private Stack <Node> s = new Stack<>();
-	
-	private int[][] startColor;
-	private int[][] endColor;
 	
 	//Dumb solver with random variable and value ordering (no forward checking).
 	public DumbSolver(int size, Node[][] maze)
@@ -20,10 +18,10 @@ public class DumbSolver {
 		printMaze(size, maze);
 		this.size = size;
 		this.maze = maze;
-		Node[][] solvedMaze = solve(maze);
+		solve();
 		
 		System.out.println("Dumb Solver Solved Maze : ");
-		printMaze(size, solvedMaze);
+		printMaze(size, maze);
 		System.out.println("------------------------- ");
 
 	}
@@ -49,48 +47,127 @@ public class DumbSolver {
 				BT(Level+1)
 		return
 	*/
-	public Node[][] solve(Node[][] orig) 
+	public void solve() 
 	{
-		Node[][] currentMaze = orig; //current maze
 		boolean finished = false;
 		while(!finished)
 		{
-			if(finishCheck(currentMaze,size)) //finish check for end
+			if(finishCheck(maze,size)) //finish check for end
 			{
 				finished = true;
 				break;
 			}
 			
 			//pick a random variable to use
-			int randomColor = rand.nextInt(reader.possibleColorsForMaze.length);
+			int randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
 			char color = reader.possibleColorsForMaze.get(randomColor);
-			for(int i = 0; i++; i <= maze.length)
+			
+			
+			for(int i = 0;i <= maze.length; i++)
 			{
-				for(int j = 0; j++; j <= maze[0].length)
+				for(int j = 0; j <= maze[0].length; j++)
 				{
-					if(maze[i][j] == color)
+					if(maze[i][j].value == color)
 					{
-						
+						if(dumbSearch(color, i, j) == false)
+						{
+							//delete current color & delete popped color from stack. (lower case only)
+							delete(Character.toLowerCase(color));
+							color = colorsFilled.pop();
+							delete(Character.toLowerCase(color));
+						}			
 					}
 				}
 			}
 		}
-		return currentMaze;
 	}
 
-	public boolean solveUtil()
+	
+	//Helper method for backtracking to delete a color from the maze (by replacing all of it's lower case chars).
+	private void delete(char color)
 	{
-		if(solveUtil)
+		for(int i = 0; i <= maze.length-1; i++)
 		{
-			return true;
-		}
-		else
-		{
-			maze[][] = -1;
+			for(int j = 0; j <= maze.length-1; j++)
+			{
+				if(maze[i][j].value == color)
+				{
+					maze[i][j].value = '_';
+				}
+			}
 		}
 	}
+	
+	
+	private boolean dumbSearch(char color, int startx, int starty)
+	{
+		int currentX = startx;
+		int currentY = starty;
+		
+		
+		char GoalColor = Character.toUpperCase(color);
+		ArrayList<Character> checked = new ArrayList<Character>();
+		Boolean colorFinished = false;
+		
+		while(colorFinished == false)
+		{
+			//check for stuck - if we have a full list of checked then return false.
+			if(checked.size() == 4)
+			{
+				return false;
+			}
+			
+			if(colorFinishedCheck(color, currentX, currentY)) //if an adjacent node is a finish for the current color.
+			{
+				return true;
+			}
+			
+			int next = rand.nextInt(4); //pick a direction.
+			switch(next)
+			{
+			case 0: //north
+				//check for adjacent capitol letter
+				if(isFree(currentX, currentY-1))
+				{
+					//change current x and y
+					//checked list reset to 0.
+					//set new x and y node value to be the color character
+				}else //north is not free
+				{
+					//add north to checked.
+					checked.add('n');
+				}
+				
+				//else (isFree is false) - add 
+				break;
+			case 1: //east
+				break;
+			case 2://south
+				break;
+			case 3://west
+				break;
+			default: 
+				break;
+			}
+			
+		}
+		
+		//check direction
+			//if capitol then return true break out.
+			//if open then "place lower case there" and change current location to that location.
+			//if not valid check another random. (up to 4 directions)
+		
+		//return false if cannot complete color
+	}
 
+	public boolean colorFinishedCheck(char c, int x, int y)
+	{
+	
+	}
 
+	
+	
+	
 	public boolean finishCheck(Node[][] m, int x)
 	{
 		for(int i = 0; i < x-1; i++)
@@ -118,25 +195,12 @@ public class DumbSolver {
 			System.out.println("");
 		}
 		
-		private void dumbSearch(char[][] maze, char color)
-		{
-			//capitolize color char = end node check thing
-			char GoalColor = Character.toUpperCase(color);
-			
-			//random number for nsew
-			
-			//check direction
-				//if capitol  then return true break out.
-				//if open then "place lower case there" and change current location to that location.
-				//if not valid check another random. (up to 4 directions)
-			
-			//backtrack the current color. reset(color)
-		}
+		
 				
 		
 		
 		//checking the coord x,y to see if it is free
-		private boolean isFree(Node[][] maze, int size, int x, int y)
+		private boolean isFree(int x, int y)
 		{
 			if((x >= 0 && x < size) && (y>=0 && y < size)) //if coord is within the bounds of the maze
 			{
