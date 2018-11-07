@@ -18,7 +18,7 @@ public class DumbSolver {
 		printMaze(size, maze);
 		this.size = size;
 		this.maze = maze;
-		solve();
+		//solve();
 		
 		System.out.println("Dumb Solver Solved Maze : ");
 		printMaze(size, maze);
@@ -86,9 +86,9 @@ public class DumbSolver {
 	//Helper method for backtracking to delete a color from the maze (by replacing all of it's lower case chars).
 	private void delete(char color)
 	{
-		for(int i = 0; i <= maze.length-1; i++)
+		for(int i = 0; i <= maze.length; i++)
 		{
-			for(int j = 0; j <= maze.length-1; j++)
+			for(int j = 0; j <= maze.length; j++)
 			{
 				if(maze[i][j].value == color)
 				{
@@ -123,6 +123,7 @@ public class DumbSolver {
 			}
 			
 			int next = rand.nextInt(4); //pick a direction.
+			
 			switch(next)
 			{
 			case 0: //north
@@ -137,8 +138,6 @@ public class DumbSolver {
 					//add north to checked.
 					checked.add('n');
 				}
-				
-				//else (isFree is false) - add 
 				break;
 			case 1: //east
 				break;
@@ -160,9 +159,15 @@ public class DumbSolver {
 		//return false if cannot complete color
 	}
 
+	//check adjacent spots for finish capitol letter
 	public boolean colorFinishedCheck(char c, int x, int y)
 	{
-	
+		char colorGoal = Character.toUpperCase(c);
+		
+		if(x != Reader.getStartX(c) && y-1 != Reader.getStartY(c) && maze[x][y-1].value == colorGoal)//north check
+		{
+			
+		}
 	}
 
 	
@@ -184,11 +189,11 @@ public class DumbSolver {
 	//helper method for printing 2D arrays.
 		private void printMaze(int x, Node[][] maze) {
 			System.out.println("\nMaze " + x + ": ");
-			for(int i = 0; i < x-1; i++)
+			for(int i = 0; i < x; i++)
 			{
-				for(int j = 0; j < x-1; j++)
+				for(int j = 0; j < x; j++)
 				{
-					System.out.print(maze[j][i].value);
+					System.out.print(maze[i][j].value);
 				}
 				System.out.println("");
 			}

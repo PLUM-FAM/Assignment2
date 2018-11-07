@@ -42,6 +42,7 @@ public class Reader
 							if(possibleColorsForMaze.contains(maze[i][j].value) != true) //if not already added
 							//add to list of possible colors for this maze
 							possibleColorsForMaze.add(maze[i][j].value);
+							System.out.println(maze[i][j].value + "" +  i + "" + j);
 						}
 					}
 				}
