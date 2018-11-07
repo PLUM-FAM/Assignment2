@@ -13,10 +13,106 @@ public class Reader
 	ArrayList<Character> possibleColorsForMaze = new ArrayList<Character>();
 	String fileName;
 	int size = 0;
+
+	int[] startB;
+	int[] startA;
+	int[] startW;
+	int[] startR;
+	int[] startP;
+	int[] startD;
+	int[] startO;
+	int[] startG;
+	int[] startK;
+	int[] startY;
+	int[] startQ;
 	
 	public Reader()
 	{
 		
+	}
+
+	public int getStartX(char color)
+	{
+		switch(color)
+		{
+			case 'B':
+				return startB[0];
+			
+			case 'A':
+				return startA[0];
+			
+			case 'W':
+				return startW[0];
+
+			case 'R':
+				return startR[0];
+			
+			case 'P':
+				return startP[0];
+
+			case 'D':
+				return startD[0];
+
+			case 'O':
+				return startO[0];
+
+			case 'G':
+				return startG[0];
+
+			case 'K':
+				return startK[0];
+
+			case 'Y':
+				return startY[0];
+
+			case 'Q':
+				return startQ[0];
+
+			default:
+				return -1;
+		}
+	}
+
+	public int getStartY(char color)
+	{
+		switch(color)
+		{
+			case 'B':
+				return startB[1];
+			
+			case 'A':
+				return startA[1];
+			
+			case 'W':
+				return startW[1];
+
+			case 'R':
+				return startR[1];
+			
+			case 'P':
+				return startP[1];
+
+			case 'D':
+				return startD[1];
+
+			case 'O':
+				return startO[1];
+
+			case 'G':
+				return startG[1];
+
+			case 'K':
+				return startK[1];
+
+			case 'Y':
+				return startY[1];
+
+			case 'Q':
+				return startQ[1];
+
+			default:
+				return -1;
+		}
 	}
 	
 	public Node[][] readFile(String filename, int size)
@@ -40,9 +136,71 @@ public class Reader
 						if(maze[i][j].value != '_')
 						{
 							if(possibleColorsForMaze.contains(maze[i][j].value) != true) //if not already added
-							//add to list of possible colors for this maze
-							possibleColorsForMaze.add(maze[i][j].value);
-							System.out.println(maze[i][j].value + "" +  i + "" + j);
+							{
+								//add to list of possible colors for this maze
+								possibleColorsForMaze.add(maze[i][j].value);
+								switch(maze[i][j].value)
+								{
+									case 'B':
+										startB[0] = i;
+										startB[1] = j;
+										break;
+									
+									case 'A':
+										startA[0] = i;
+										startA[1] = j;
+										break;
+									
+									case 'W':
+										startW[0] = i;
+										startW[1] = j;
+										break;
+
+									case 'R':
+										startR[0] = i;
+										startR[1] = j;
+										break;
+									
+									case 'P':
+										start[0] = i;
+										start[1] = j;
+										break;
+
+									case 'D':
+										startD[0] = i;
+										startD[1] = j;
+										break;
+
+									case 'O':
+										startO[0] = i;
+										startO[1] = j;
+										break;
+
+									case 'G':
+										startG[0] = i;
+										startG[1] = j;
+										break;
+
+									case 'K':
+										startK[0] = i;
+										startK[1] = j;
+										break;
+
+									case 'Y':
+										startY[0] = i;
+										startY[1] = j;
+										break;
+
+									case 'Q':
+										startQ[0] = i;
+										startQ[1] = j;
+										break;
+
+									default:
+										break;
+								}
+							}
+>>>>>>> d5674c9db909838aa7bb8a95eaf5f0683fad4845
 						}
 					}
 				}
