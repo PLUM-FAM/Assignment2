@@ -75,6 +75,8 @@ public class DumbSolver {
 							delete(Character.toLowerCase(color));
 							color = colorsFilled.pop();
 							delete(Character.toLowerCase(color));
+							i = maze.length + 1;
+							j = maze[0].length + 1;
 						}			
 					}
 				}
@@ -117,28 +119,33 @@ public class DumbSolver {
 				return false;
 			}
 			
-			if(colorFinishedCheck(color, currentX, currentY)) //if an adjacent node is a finish for the current color.
+			//if an adjacent node is a finish for the current color.
+			if(colorFinishedCheck(color, currentX, currentY)) 
 			{
 				return true;
 			}
 			
-			int next = rand.nextInt(4); //pick a direction.
+			//pick a direction.
+			int next = rand.nextInt(4); 
 			
 			switch(next)
 			{
-			case 0: //north
-				//check for adjacent capitol letter
-				if(isFree(currentX, currentY-1))
-				{
-					//change current x and y
-					//checked list reset to 0.
-					//set new x and y node value to be the color character
-				}else //north is not free
-				{
-					//add north to checked.
-					checked.add('n');
-				}
-				break;
+				//north	
+				case 0: 
+					//check for adjacent capitol letter
+					if(isFree(currentX, currentY-1))
+					{
+						//change current x and y
+						//checked list reset to 0.
+						//set new x and y node value to be the color character
+					}
+					//north is not free
+					else 
+					{
+						//add north to checked.
+						checked.add('n');
+					}
+					break;
 			case 1: //east
 				break;
 			case 2://south
@@ -164,10 +171,27 @@ public class DumbSolver {
 	{
 		char colorGoal = Character.toUpperCase(c);
 		
-		if(x != Reader.getStartX(c) && y-1 != Reader.getStartY(c) && maze[x][y-1].value == colorGoal)//north check
+		//north check
+		if(x != reader.getStartX(c) && y-1 != reader.getStartY(c) && maze[x][y-1].value == colorGoal)
 		{
-			
+			return true;
 		}
+		//south check
+		else if(x != reader.getStartX(c) && y+1 != reader.getStartY(c) && maze[x][y+1].value == colorGoal)
+		{
+			return true;
+		}
+		//west check
+		else if(x-1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x-1][y].value == colorGoal)
+		{
+			return true;
+		}
+		//east check
+		else if(x+1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x+1][y].value == colorGoal)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	
