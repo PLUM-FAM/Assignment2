@@ -133,7 +133,7 @@ public class DumbSolver {
 				//north	
 				case 0: 
 					//check for adjacent capitol letter
-					if(isFree(currentX, currentY-1))
+					if(isFree(currentX, currentY - 1))
 					{
 						//change current x and y
 						//checked list reset to 0.
@@ -146,12 +146,42 @@ public class DumbSolver {
 						checked.add('n');
 					}
 					break;
-			case 1: //east
-				break;
-			case 2://south
-				break;
-			case 3://west
-				break;
+				case 1: //east
+					if(isFree(currentX + 1, currentY))
+					{
+
+					}
+					//east is not free
+					else
+					{
+						//add east to checked
+						checked.add('e');
+					}
+					break;
+				case 2://south
+					if(isFree(currentX, currentY - 1))
+					{
+
+					}
+					//south is not free
+					else
+					{
+						//add south to checked
+						checked.add('s');
+					}
+					break;
+				case 3://west
+					if(isFree(currentX - 1, currentY))
+					{
+
+					}
+					//west is not free
+					else
+					{
+						//add west to checked
+						checked.add('w');
+					}
+					break;
 			default: 
 				break;
 			}
