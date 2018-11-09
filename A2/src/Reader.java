@@ -14,17 +14,17 @@ public class Reader
 	String fileName;
 	int size = 0;
 
-	int[] startB;
-	int[] startA;
-	int[] startW;
-	int[] startR;
-	int[] startP;
-	int[] startD;
-	int[] startO;
-	int[] startG;
-	int[] startK;
-	int[] startY;
-	int[] startQ;
+	int[] startB = new int[2];
+	int[] startA = new int[2];
+	int[] startW = new int[2];
+	int[] startR = new int[2];
+	int[] startP = new int[2];
+	int[] startD = new int[2];
+	int[] startO = new int[2];
+	int[] startG = new int[2];
+	int[] startK = new int[2];
+	int[] startY = new int[2];
+	int[] startQ = new int[2];
 	
 	public Reader()
 	{
@@ -135,10 +135,14 @@ public class Reader
 						
 						if(maze[i][j].value != '_')
 						{
+							System.out.println(maze[i][j].value);
+							System.out.println(possibleColorsForMaze.contains(maze[i][j].value));
 							if(possibleColorsForMaze.contains(maze[i][j].value) != true) //if not already added
 							{
+								System.out.println("entered if");
 								//add to list of possible colors for this maze
 								possibleColorsForMaze.add(maze[i][j].value);
+								System.out.println(possibleColorsForMaze.size());
 								switch(maze[i][j].value)
 								{
 									case 'B':
@@ -162,8 +166,8 @@ public class Reader
 										break;
 									
 									case 'P':
-										start[0] = i;
-										start[1] = j;
+										startP[0] = i;
+										startP[1] = j;
 										break;
 
 									case 'D':
@@ -200,7 +204,7 @@ public class Reader
 										break;
 								}
 							}
->>>>>>> d5674c9db909838aa7bb8a95eaf5f0683fad4845
+
 						}
 					}
 				}

@@ -3,22 +3,25 @@ public class DumbSolver {
 	final private int size;
 	final private Node[][] maze; //orig maze
 	
+	
     private Stack<Character> colorsFilled = new Stack<>(); //stack to keep track of colors completed so we can back track.
-
+	public ArrayList<Character> dumbPossibleColors = new ArrayList<Character>();
 
 	Reader reader = new Reader();
 	Random rand = new Random();
 	
 	//Dumb solver with random variable and value ordering (no forward checking).
-	public DumbSolver(int size, Node[][] maze)
+	public DumbSolver(int size, String fileName)
 	{
+		Node[][] maze = reader.readFile(fileName, size);
+
 		System.out.println("---------------------------------- ");
 		System.out.println("Started dumb solver for maze size: " + size);
 		System.out.println("Initial maze: ");
 		printMaze(size, maze);
 		this.size = size;
 		this.maze = maze;
-		//solve();
+		
 		
 		System.out.println("Dumb Solver Solved Maze : ");
 		printMaze(size, maze);
@@ -26,51 +29,39 @@ public class DumbSolver {
 
 	}
 	
-	/*
-	 * BT(Level)
-		If all variables assigned
-			PRINT Value of each Variable
-			RETURN or EXIT (RETURN for more solutions)
-			(EXIT for only one solution)
-		V := PickUnassignedVariable()
-		Variable[Level] := V
-		Assigned[V] := TRUE
-		for d := each member of Domain(V)
-			Value[V] := d
-			OK := TRUE
-			for each constraint C such that
-					V is a variable of C
-					and all other variables of C are assigned.
-				if C is not satisfied by the current set of assignments
-				OK := FALSE
-			if(OK)
-				BT(Level+1)
-		return
-	*/
+	
 	public void solve() 
 	{
 		boolean finished = false;
 		while(!finished)
 		{
+			System.out.println("First line inside while(!finished)");
 			if(finishCheck(maze,size)) //finish check for end
 			{
+				System.out.println("Inside finishCheck");
 				finished = true;
+
 				break;
 			}
 			
 			//pick a random variable to use
+			System.out.println(reader.possibleColorsForMaze.size());
 			int randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
 			char color = reader.possibleColorsForMaze.get(randomColor);
 			
 			
 			for(int i = 0;i <= maze.length; i++)
 			{
+				System.out.println("a");
 				for(int j = 0; j <= maze[0].length; j++)
 				{
+					System.out.println("b");
 					if(maze[i][j].value == color)
 					{
+						System.out.println("c");
 						if(dumbSearch(color, i, j) == false)
 						{
+							System.out.println("d");
 							//delete current color & delete popped color from stack. (lower case only)
 							delete(Character.toLowerCase(color));
 							color = colorsFilled.pop();
@@ -113,6 +104,8 @@ public class DumbSolver {
 		
 		while(colorFinished == false)
 		{
+			System.out.println("X: " + currentX + " Y: " + currentY);
+
 			//check for stuck - if we have a full list of checked then return false.
 			if(checked.size() == 4)
 			{
@@ -253,10 +246,10 @@ public class DumbSolver {
 			for(int j = 0; j < x-1; j++)
 			{
 				if(maze[j][i].value == '_')
-				{return true;}
+				{return false;}
 			}
 		}
-		return false;
+		return true;
 	}
 		
 	//helper method for printing 2D arrays.
