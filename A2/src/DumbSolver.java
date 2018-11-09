@@ -135,9 +135,12 @@ public class DumbSolver {
 					//check for adjacent capitol letter
 					if(isFree(currentX, currentY - 1))
 					{
-						//change current x and y
+						//change current y
+						currentY = currentY - 1;
 						//checked list reset to 0.
+						checked.clear();
 						//set new x and y node value to be the color character
+						maze[currentX][currentY].value = color;
 					}
 					//north is not free
 					else 
@@ -149,7 +152,12 @@ public class DumbSolver {
 				case 1: //east
 					if(isFree(currentX + 1, currentY))
 					{
-
+						//change current x
+						currentX = currentX + 1;
+						//checked list reset to 0.
+						checked.clear();
+						//set new x and y node value to be the color character
+						maze[currentX][currentY].value = color;
 					}
 					//east is not free
 					else
@@ -159,9 +167,14 @@ public class DumbSolver {
 					}
 					break;
 				case 2://south
-					if(isFree(currentX, currentY - 1))
+					if(isFree(currentX, currentY + 1))
 					{
-
+						//change current y
+						currentY = currentY + 1;
+						//checked list reset to 0.
+						checked.clear();
+						//set new x and y node value to be the color character
+						maze[currentX][currentY].value = color;
 					}
 					//south is not free
 					else
@@ -173,7 +186,12 @@ public class DumbSolver {
 				case 3://west
 					if(isFree(currentX - 1, currentY))
 					{
-
+						//change current y
+						currentX = currentX - 1;
+						//checked list reset to 0.
+						checked.clear();
+						//set new x and y node value to be the color character
+						maze[currentX][currentY].value = color;
 					}
 					//west is not free
 					else
