@@ -20,12 +20,7 @@ public class DumbSolver {
 		System.out.println("Initial maze: ");
 		printMaze(size, maze);
 		this.size = size;
-		this.maze = maze;
-		
-		
-		System.out.println("Dumb Solver Solved Maze : ");
-		printMaze(size, maze);
-		System.out.println("------------------------- ");
+		this.maze = maze;		
 
 	}
 	
@@ -35,36 +30,51 @@ public class DumbSolver {
 		boolean finished = false;
 		while(!finished)
 		{
-			System.out.println("First line inside while(!finished)");
+			//System.out.println("First line inside while(!finished)");
 			if(finishCheck(maze,size)) //finish check for end
 			{
-				System.out.println("Inside finishCheck");
+				//System.out.println("Inside finishCheck");
 				finished = true;
 
 				break;
 			}
 			
 			//pick a random variable to use
-			System.out.println(reader.possibleColorsForMaze.size());
+			//System.out.println(reader.possibleColorsForMaze.size());
 			int randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
+			
+			//possibleColorsForMaze is uppercase
 			char color = reader.possibleColorsForMaze.get(randomColor);
+
+			//colorsFilled is uppercase
+			while(colorsFilled.contains(color))
+			{	
+				randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
+				color = reader.possibleColorsForMaze.get(randomColor);
+			}
+			Character.toLowerCase(color);
 			
-			
-			for(int i = 0;i <= maze.length; i++)
+			for(int i = 0;i <= maze.length - 1; i++)
 			{
-				System.out.println("a");
-				for(int j = 0; j <= maze[0].length; j++)
+				//System.out.println("a");
+				for(int j = 0; j <= maze[0].length - 1; j++)
 				{
-					System.out.println("b");
+					//System.out.println("b");
 					if(maze[i][j].value == color)
 					{
-						System.out.println("c");
+						//System.out.println("c");
 						if(dumbSearch(color, i, j) == false)
 						{
-							System.out.println("d");
+							//System.out.println("d");
 							//delete current color & delete popped color from stack. (lower case only)
 							delete(Character.toLowerCase(color));
-							color = colorsFilled.pop();
+							try{
+								color = colorsFilled.pop();
+							}catch(EmptyStackException e)
+							{
+								i = maze.length + 1;
+								j = maze[0].length + 1;
+							}
 							delete(Character.toLowerCase(color));
 							i = maze.length + 1;
 							j = maze[0].length + 1;
@@ -73,15 +83,18 @@ public class DumbSolver {
 				}
 			}
 		}
+		System.out.println("Dumb Solver Solved Maze : ");
+		printMaze(size, maze);
+		System.out.println("------------------------- ");
 	}
 
 	
 	//Helper method for backtracking to delete a color from the maze (by replacing all of it's lower case chars).
 	private void delete(char color)
 	{
-		for(int i = 0; i <= maze.length; i++)
+		for(int i = 0; i <= maze.length - 1; i++)
 		{
-			for(int j = 0; j <= maze.length; j++)
+			for(int j = 0; j <= maze.length - 1; j++)
 			{
 				if(maze[i][j].value == color)
 				{
@@ -97,15 +110,17 @@ public class DumbSolver {
 		int currentX = startx;
 		int currentY = starty;
 		
+		char setColor = Character.toLowerCase(color);
 		
-		char GoalColor = Character.toUpperCase(color);
+		
+		//char GoalColor = Character.toUpperCase(color);
 		ArrayList<Character> checked = new ArrayList<Character>();
 		Boolean colorFinished = false;
 		
 		while(colorFinished == false)
 		{
-			System.out.println("X: " + currentX + " Y: " + currentY);
-
+			//System.out.println("X: " + currentX + " Y: " + currentY);
+			printMaze(size, maze);
 			//check for stuck - if we have a full list of checked then return false.
 			if(checked.size() == 4)
 			{
@@ -115,6 +130,7 @@ public class DumbSolver {
 			//if an adjacent node is a finish for the current color.
 			if(colorFinishedCheck(color, currentX, currentY)) 
 			{
+				colorsFilled.add(color);
 				return true;
 			}
 			
@@ -133,7 +149,7 @@ public class DumbSolver {
 						//checked list reset to 0.
 						checked.clear();
 						//set new x and y node value to be the color character
-						maze[currentX][currentY].value = color;
+						maze[currentX][currentY].value = setColor;
 					}
 					//north is not free
 					else 
@@ -150,7 +166,7 @@ public class DumbSolver {
 						//checked list reset to 0.
 						checked.clear();
 						//set new x and y node value to be the color character
-						maze[currentX][currentY].value = color;
+						maze[currentX][currentY].value = setColor;
 					}
 					//east is not free
 					else
@@ -167,7 +183,7 @@ public class DumbSolver {
 						//checked list reset to 0.
 						checked.clear();
 						//set new x and y node value to be the color character
-						maze[currentX][currentY].value = color;
+						maze[currentX][currentY].value = setColor;
 					}
 					//south is not free
 					else
@@ -184,7 +200,7 @@ public class DumbSolver {
 						//checked list reset to 0.
 						checked.clear();
 						//set new x and y node value to be the color character
-						maze[currentX][currentY].value = color;
+						maze[currentX][currentY].value = setColor;
 					}
 					//west is not free
 					else
@@ -212,26 +228,50 @@ public class DumbSolver {
 	public boolean colorFinishedCheck(char c, int x, int y)
 	{
 		char colorGoal = Character.toUpperCase(c);
-		
-		//north check
-		if(x != reader.getStartX(c) && y-1 != reader.getStartY(c) && maze[x][y-1].value == colorGoal)
+		System.out.println(c);
+		try{
+			//north check
+			if(x != reader.getStartX(c) && y-1 != reader.getStartY(c) && maze[x][y-1].value == colorGoal)
+			{
+				System.out.print("Check North");
+				return true;
+			}
+		}catch(IndexOutOfBoundsException e)
 		{
-			return true;
+
 		}
-		//south check
-		else if(x != reader.getStartX(c) && y+1 != reader.getStartY(c) && maze[x][y+1].value == colorGoal)
+		try{
+			//south check
+			if(x != reader.getStartX(c) && y+1 != reader.getStartY(c) && maze[x][y+1].value == colorGoal)
+			{
+				System.out.println("Check South");
+				return true;
+			}
+		}catch(IndexOutOfBoundsException e)
 		{
-			return true;
+
 		}
-		//west check
-		else if(x-1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x-1][y].value == colorGoal)
+		try{
+			//west check
+			if(x-1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x-1][y].value == colorGoal)
+			{
+				System.out.println("Check West");
+				return true;
+			}
+		}catch(IndexOutOfBoundsException e)
 		{
-			return true;
+
 		}
-		//east check
-		else if(x+1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x+1][y].value == colorGoal)
+		try{
+			//east check
+			if(x+1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x+1][y].value == colorGoal)
+			{
+				System.out.println("Check East");
+				return true;
+			}
+		}catch(IndexOutOfBoundsException e)
 		{
-			return true;
+
 		}
 		return false;
 	}
