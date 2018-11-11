@@ -130,8 +130,8 @@ public class Reader
 					for(int j = 0; j < height; j++)
 					{
 						char value = line.charAt(j); //the next spot in the 2D array is the next character in the text file.
-						ArrayList<Character> possible = new ArrayList<Character>(); //possible colors for the current node. initially empty
-						maze[i][j] = new Node(i,j, value, possible);
+						//ArrayList<Character> possible = new ArrayList<Character>(); //possible colors for the current node. initially empty
+						maze[i][j] = new Node(i,j, value);
 						
 						if(maze[i][j].value != '_')
 						{
@@ -210,19 +210,19 @@ public class Reader
 				}
 				
 				//set possible values for each node based on the colors used in the maze
-				for(int i = 0; i < width; i++)
-				{
-					for(int j = 0; j < height; j++)
-					{
-						if(maze[i][j].value != '_') //sets for EVERYTHING but _ 
-						{
-							for(int l = 0; l < (possibleColorsForMaze.size()); l++)
-							{
-								maze[i][j].possible.add(possibleColorsForMaze.get(l));
-							}
-						}
-					}
-				}		
+				// for(int i = 0; i < width; i++)
+				// {
+				// 	for(int j = 0; j < height; j++)
+				// 	{
+				// 		if(maze[i][j].value != '_') //sets for EVERYTHING but _ 
+				// 		{
+				// 			for(int l = 0; l < (possibleColorsForMaze.size()); l++)
+				// 			{
+				// 				maze[i][j].possible.add(possibleColorsForMaze.get(l));
+				// 			}
+				// 		}
+				// 	}
+				// }		
 			}
 			
 			catch(IOException e)

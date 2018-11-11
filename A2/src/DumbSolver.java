@@ -45,7 +45,6 @@ public class DumbSolver {
 			{
 				//System.out.println("Inside finishCheck");
 				finished = true;
-
 				break;
 			}
 			
@@ -319,10 +318,36 @@ public class DumbSolver {
 			for(int j = 0; j <= size - 1; j++)
 			{
 				if(maze[i][j].value == '_')
-				{return false;}
+				{
+					return false;
+				}
+				
 			}
 		}
+
+		if(reader.possibleColorsForMaze.size() != colorsFilled.size())
+		{
+			printMaze(size, maze);
+			colorsFilled.clear();
+			resetMaze();
+			return false;
+		}
+
 		return true;
+	}
+
+	private void resetMaze()
+	{
+		for(int i = 0; i <= size - 1; i++)
+		{
+			for(int j = 0; j <= size - 1; j++)
+			{
+				if(Character.isLowerCase(maze[i][j].value))
+				{
+					maze[i][j].value = '_';
+				}
+			}
+		}
 	}
 		
 	//helper method for printing 2D arrays.

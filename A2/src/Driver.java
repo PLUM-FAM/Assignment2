@@ -25,6 +25,7 @@ public class Driver {
 		{
 			//solve with our "smart implementation"
 			System.out.println("Solving with smart solver");
+			SmartSolver smartResult = new SmartSolver(size, fileName);
 			//SmartSolver SmartResult = new SmartSolver(size,maze);
 		}else
 		{
