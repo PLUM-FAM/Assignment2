@@ -135,14 +135,14 @@ public class Reader
 						
 						if(maze[i][j].value != '_')
 						{
-							System.out.println(maze[i][j].value);
-							System.out.println(possibleColorsForMaze.contains(maze[i][j].value));
+							//System.out.println(maze[i][j].value);
+							//System.out.println(possibleColorsForMaze.contains(maze[i][j].value));
 							if(possibleColorsForMaze.contains(maze[i][j].value) != true) //if not already added
 							{
-								System.out.println("entered if");
+								//System.out.println("entered if");
 								//add to list of possible colors for this maze
 								possibleColorsForMaze.add(maze[i][j].value);
-								System.out.println(possibleColorsForMaze.size());
+								//System.out.println(possibleColorsForMaze.size());
 								switch(maze[i][j].value)
 								{
 									case 'B':
