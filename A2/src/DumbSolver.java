@@ -64,7 +64,7 @@ public class DumbSolver {
 			}
 
 			Character.toUpperCase(color);
-			System.out.println("Color picked: " + color);
+			//System.out.println("Color picked: " + color);
 			
 			for(int i = 0;i <= maze.length - 1; i++)
 			{
@@ -114,8 +114,8 @@ public class DumbSolver {
 				}
 			}
 		}
-		System.out.println("Color deleted: " + color);
-		printMaze(size, maze);
+		//System.out.println("Color deleted: " + color);
+		//printMaze(size, maze);
 	}
 	
 	
@@ -133,7 +133,7 @@ public class DumbSolver {
 		
 		while(colorFinished == false)
 		{
-			printMaze(size, maze);
+			//printMaze(size, maze);
 			//pick a direction.
 			int next = rand.nextInt(4); 
 			while(checked.contains(next))
@@ -262,8 +262,8 @@ public class DumbSolver {
 			//north check
 			if(x - 1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x - 1][y].value == colorGoal)
 			{
-				System.out.println("Check North");
-				System.out.println("North is " + colorGoal);
+				//System.out.println("Check North");
+				//System.out.println("North is " + colorGoal);
 				return true;
 			}
 		}catch(IndexOutOfBoundsException e)
@@ -274,8 +274,8 @@ public class DumbSolver {
 			//south check
 			if(x + 1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x + 1][y].value == colorGoal)
 			{
-				System.out.println("Check South");
-				System.out.println("South is " + colorGoal);
+				//System.out.println("Check South");
+				//System.out.println("South is " + colorGoal);
 				return true;
 			}
 		}catch(IndexOutOfBoundsException e)
@@ -286,8 +286,8 @@ public class DumbSolver {
 			//west check
 			if(x != reader.getStartX(c) && y - 1 != reader.getStartY(c) && maze[x][y - 1].value == colorGoal)
 			{
-				System.out.println("Check West");
-				System.out.println("West is " + colorGoal);
+				//System.out.println("Check West");
+				//System.out.println("West is " + colorGoal);
 				return true;
 			}
 		}catch(IndexOutOfBoundsException e)
@@ -298,8 +298,8 @@ public class DumbSolver {
 			//east check
 			if(x != reader.getStartX(c) && y + 1 != reader.getStartY(c) && maze[x][y + 1].value == colorGoal)
 			{
-				System.out.println("Check East");
-				System.out.println("East is " + colorGoal);
+				//System.out.println("Check East");
+				//System.out.println("East is " + colorGoal);
 				return true;
 			}
 		}catch(IndexOutOfBoundsException e)
