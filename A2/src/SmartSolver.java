@@ -5,8 +5,14 @@ public class SmartSolver
     final private int size;
     final private Node[][] maze;
 
-    private Stack<Character> colorsFilled = new Stack<Character>();
+    /* TODO:
+     * 1.) Need a method to calculate constraint value for each of the colors
+     *  in the current maze. Lowest value (lowest number of available moves) is 
+     *  most constrained. Start with color with lowest value.
+     * 2.) Recalculate constraints after each color has finished. 
+     */
 
+    private Stack<Character> colorsFilled = new Stack<Character>();
 
     Reader reader = new Reader();
     Random rand = new Random();
