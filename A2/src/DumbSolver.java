@@ -44,7 +44,6 @@ public class DumbSolver {
 			if(finishCheck(maze,size)) //finish check for end
 			{
 				//System.out.println("Inside finishCheck");
-				printMaze(size, maze);
 				finished = true;
 
 				break;
@@ -55,7 +54,6 @@ public class DumbSolver {
 			
 			//possibleColorsForMaze is uppercase
 			char color = reader.possibleColorsForMaze.get(randomColor);
-			System.out.println("Color initially picked " + color);
 
 			//colorsFilled is uppercase
 			//loop while we pick a color that hasn't been finished yet
@@ -70,15 +68,11 @@ public class DumbSolver {
 			
 			for(int i = 0;i <= maze.length - 1; i++)
 			{
-				//System.out.println("a");
 				for(int j = 0; j <= maze[0].length - 1; j++)
 				{
-					//System.out.println("b");
-					if(maze[i][j].value == color)
+					if(maze[i][j].value == color && i == reader.getStartX(color) && j == reader.getStartY(color))
 					{
 						//System.out.println("c");
-						printMaze(size, maze);
-						System.out.println("Maze print before dumbSearch for " + color + " is called.");
 						if(dumbSearch(color, i, j) == false)
 						{
 							//System.out.println("d");
@@ -94,11 +88,9 @@ public class DumbSolver {
 							}
 							
 						}	
-						else
-						{
-							i = 10000;
-							j = 10000;
-						}	
+						
+						i = 10000;
+						j = 10000;	
 					}
 				}
 			}
@@ -112,8 +104,6 @@ public class DumbSolver {
 	//Helper method for backtracking to delete a color from the maze (by replacing all of it's lower case chars).
 	private void delete(char color)
 	{
-		printMaze(size, maze);
-		System.out.println("Color to delete: " + color);
 		for(int i = 0; i < maze.length; i++)
 		{
 			for(int j = 0; j < maze.length; j++)
@@ -124,6 +114,7 @@ public class DumbSolver {
 				}
 			}
 		}
+		System.out.println("Color deleted: " + color);
 		printMaze(size, maze);
 	}
 	
@@ -142,6 +133,7 @@ public class DumbSolver {
 		
 		while(colorFinished == false)
 		{
+			printMaze(size, maze);
 			//pick a direction.
 			int next = rand.nextInt(4); 
 			while(checked.contains(next))
@@ -322,9 +314,9 @@ public class DumbSolver {
 	
 	public boolean finishCheck(Node[][] m, int x)
 	{
-		for(int i = 0; i < x-1; i++)
+		for(int i = 0; i <= size - 1; i++)
 		{
-			for(int j = 0; j < x-1; j++)
+			for(int j = 0; j <= size - 1; j++)
 			{
 				if(maze[i][j].value == '_')
 				{return false;}
