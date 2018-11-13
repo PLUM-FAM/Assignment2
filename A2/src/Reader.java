@@ -10,7 +10,7 @@ public class Reader
 	Node[][] maze;
 	int width;
 	int height;
-	ArrayList<Character> possibleColorsForMaze = new ArrayList<Character>();
+	public ArrayList<Character> possibleColorsForMaze = new ArrayList<Character>();
 	String fileName;
 	int size = 0;
 

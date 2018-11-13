@@ -15,7 +15,7 @@ public class DumbSolver {
 	 * 
 	 */
     private Stack<Character> colorsFilled = new Stack<>(); //stack to keep track of colors completed so we can back track.
-	public ArrayList<Character> dumbPossibleColors = new ArrayList<Character>();
+	//public ArrayList<Character> dumbPossibleColors = new ArrayList<Character>();
 
 	Reader reader = new Reader();
 	Random rand = new Random();

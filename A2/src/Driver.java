@@ -18,19 +18,25 @@ public class Driver {
 			//solve with our "dumb implementation"
 			System.out.println("Solving with dumb solver");
 			DumbSolver DumbResult = new DumbSolver(size, fileName);
-			//DumbResult.dumbPossibleColors = r.possibleColorsForMaze;
 			long startTime = System.nanoTime();
 			DumbResult.solve();
 			long finishTime = System.nanoTime();
 			System.out.println("Start time: " + startTime);
 			System.out.println("Finish time: " + finishTime);
-			System.out.println("Finish time in Milliseconds " + ((finishTime - startTime) / 1000000));
+			System.out.println("'Dumb' Finish time in Milliseconds " + ((finishTime - startTime) / 1000000));
+			
 		}else if(args[2].equals("s"))
 		{
 			//solve with our "smart implementation"
 			System.out.println("Solving with smart solver");
 			SmartSolver smartResult = new SmartSolver(size, fileName);
-			//SmartSolver SmartResult = new SmartSolver(size,maze);
+			long startTime = System.nanoTime();
+			//smartResult.solve();
+			long finishTime = System.nanoTime();
+			System.out.println("Start time: " + startTime);
+			System.out.println("Finish time: " + finishTime);
+			System.out.println("'Smart' Finish time in Milliseconds " + ((finishTime - startTime) / 1000000));
+			
 		}else
 		{
 			System.out.println("error loading solver type with input " + args[2]);
