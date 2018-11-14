@@ -31,7 +31,7 @@ public class Driver {
 			System.out.println("Solving with smart solver");
 			SmartSolver smartResult = new SmartSolver(size, fileName);
 			long startTime = System.nanoTime();
-			//smartResult.solve();
+			smartResult.solve();
 			long finishTime = System.nanoTime();
 			System.out.println("Start time: " + startTime);
 			System.out.println("Finish time: " + finishTime);
