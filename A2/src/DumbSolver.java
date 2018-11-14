@@ -223,6 +223,7 @@ public class DumbSolver {
 			}
 		}
 
+		//finished maze check
 		if(colorFinished)
 		{
 			return true;
@@ -231,12 +232,6 @@ public class DumbSolver {
 		{
 			return false;
 		}
-		//check direction
-			//if capitol then return true break out.
-			//if open then "place lower case there" and change current location to that location.
-			//if not valid check another random. (up to 4 directions)
-		
-		//return false if cannot complete color
 	}
 
 	//check adjacent spots for finish capitol letter
