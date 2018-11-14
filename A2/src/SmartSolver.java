@@ -7,10 +7,6 @@ public class SmartSolver extends Solver
 
     /* TODO:
      * 1.) Run dumbSolver search by picking least constrained for color order.
-     * 2.) Remember to Recalculate constraints after each color has finished.
-     * 
-     * 
-     * NOTE: the stack of colors filled contains StartNodes instead of chars for the smart solver.
      */
 	
 	
@@ -34,22 +30,23 @@ public class SmartSolver extends Solver
     }
     
     
-    
-    
-    
     public void solve()
     {
     	populateStartNodeArray();
     	StartNode nextColor;
-    	//initialize lastcolor's value to X because it is not a valid color value(for this assignment)
+    	//initialize lastcolor's value to X and Z because they are not valid color values(for this assignment)
     	StartNode lastColor = new StartNode(-1, -1, 100000, 'X'); 
-    	
-		char color;
+    	StartNode lastLastColor = new StartNode(-1,-1, 100000, 'Z');
+		char temp;
+
+		char colorChar;
     	boolean finished = false;
+    	int count = 0;
 		while(!finished)
 		{
 			System.out.println("-------------");
 			printMaze(size,maze);
+			
 			//finish check for end
 			if(finishCheck(maze,size))
 			{
@@ -58,30 +55,70 @@ public class SmartSolver extends Solver
 			}
 			
 			calcConstraints();
-						
 			//pick the most constrained value to use
-			nextColor = getMostConstrained();			
-			color = nextColor.value;
+			nextColor = getMostConstrained();
+			colorChar = nextColor.value;
 			
-			//no more start positions but the maze stil contains _'s
-			if(nextColor.value == 'x') 
+			
+			
+			//error detection where there are more start positions but the maze stil contains _'s
+//			if(colorChar == 'X' || colorChar == 'Z' || colorChar == 'z' || colorChar =='x') 
+//			{
+//				resetMaze();
+//				//reset last and last last values
+//				lastColor.value = 'X';
+//		    	lastLastColor.value = 'Z';
+//		    	
+//				//this time choose a random color to start with.
+//				int randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
+//				nextColor = startNodes.get(randomColor);
+//				//loop while we pick a color that hasn't been finished yet
+//				while(colorsFilled.contains(colorChar))
+//				{	
+//					randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
+//					nextColor = startNodes.get(randomColor);
+//					colorChar = nextColor.value;
+//				}
+//				System.out.println("Random color: " + nextColor.value);
+//				
+//
+//			}
+			
+			
+			//error detection for "back and forth" stuck
+			if(nextColor.value == lastColor.value || nextColor.value == lastLastColor.value)
 			{
-				resetMaze();
-				//this time choose a random color to start with.
-				int randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
-				nextColor = startNodes.get(randomColor);
-				//loop while we pick a color that hasn't been finished yet
-				while(colorsFilled.contains(color))
-				{	
-					randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
-					nextColor = startNodes.get(randomColor);
-				}
+				count++;
+				System.out.println(count);
 			}
 			
-			System.out.println("the current most constrained color is :" + nextColor.value);
+			if(count >=6)
+			{
+				try{
+					temp = colorsFilled.pop();
+					delete(Character.toLowerCase(colorChar));
+				}catch(EmptyStackException e)
+				{}
+				try{
+					temp = colorsFilled.pop();
+					delete(Character.toLowerCase(colorChar));
+				}catch(EmptyStackException e)
+				{}
+				try{
+					temp = colorsFilled.pop();
+					delete(Character.toLowerCase(colorChar));
+				}catch(EmptyStackException e)
+				{}
+					
+				count = 0; //reset count
+			}
+			
+			lastLastColor = lastColor;
+			lastColor = nextColor;
+				
+				
 
-			//set lastColor for next iteration
-			lastColor = nextColor; 
+			System.out.println("the current color is :" + nextColor.value);
 			
 			
 			
@@ -89,21 +126,21 @@ public class SmartSolver extends Solver
 			
 
 			//set color to uppercase to search through the maze and find the start nodes
-			Character.toUpperCase(color);
+			Character.toUpperCase(colorChar);
 			for(int i = 0;i <= maze.length - 1; i++)
 			{
 				for(int j = 0; j <= maze[0].length - 1; j++)
 				{
-					if(maze[i][j].value == color && i == reader.getStartX(color) && j == reader.getStartY(color))
+					if(maze[i][j].value == colorChar && i == reader.getStartX(colorChar) && j == reader.getStartY(colorChar))
 					{
 						//if color gets stuck (dumbSearch == false), 
-						if(dumbSearch(color, i, j) == false)
+						if(dumbSearch(colorChar, i, j) == false)
 						{
 							//delete (lowercase) current color & delete popped color from stack.
-							delete(Character.toLowerCase(color));
+							delete(Character.toLowerCase(colorChar));
 							try{
-								color = colorsFilled.pop();
-								delete(Character.toLowerCase(color));
+								colorChar = colorsFilled.pop();
+								delete(Character.toLowerCase(colorChar));
 							}catch(EmptyStackException e)
 							{
 								i = 10000;
@@ -390,7 +427,6 @@ public class SmartSolver extends Solver
 	    		{}
 	    		
     			n.constraint = count;
-    			System.out.println(n.value + " c = " + n.constraint);
     		}
     	}
     	
