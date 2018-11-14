@@ -32,6 +32,7 @@ public class Solver {
 			{
 				if(x - 1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x - 1][y].value == colorGoal)
 				{
+					colorsFilled.add(c);
 					return true;
 				}
 			}
@@ -45,6 +46,7 @@ public class Solver {
 			{
 				if(x + 1 != reader.getStartX(c) && y != reader.getStartY(c) && maze[x + 1][y].value == colorGoal)
 				{
+					colorsFilled.add(c);
 					return true;
 				}
 			}
@@ -58,6 +60,7 @@ public class Solver {
 			{
 				if(x != reader.getStartX(c) && y - 1 != reader.getStartY(c) && maze[x][y - 1].value == colorGoal)
 				{
+					colorsFilled.add(c);
 					return true;
 				}
 			}
@@ -71,6 +74,7 @@ public class Solver {
 			{
 				if(x != reader.getStartX(c) && y + 1 != reader.getStartY(c) && maze[x][y + 1].value == colorGoal)
 				{
+					colorsFilled.add(c);
 					return true;
 				}
 			}
@@ -97,8 +101,18 @@ public class Solver {
 				}
 			}
 
+			//If the maze is filled, but not every color was completed, reset the maze
 			if(reader.possibleColorsForMaze.size() != colorsFilled.size())
 			{
+				for(Character n : colorsFilled)
+				{
+					System.out.println(n);
+				}
+				System.out.println();
+				for(Character n : reader.possibleColorsForMaze)
+				{
+					System.out.println(n);
+				}
 				printMaze(size, maze);
 				colorsFilled.clear();
 				resetMaze();
@@ -177,5 +191,10 @@ public class Solver {
 					}
 				}
 			}
+			try
+			{
+				colorsFilled.remove(Character.toUpperCase(color));
+			} catch(ArrayIndexOutOfBoundsException e)
+			{}
 		}
 }

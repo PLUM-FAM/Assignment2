@@ -11,13 +11,12 @@ public class SmartSolver extends Solver
 	
 	
 	public ArrayList<Character> smartPossibleColors = new ArrayList<Character>();
-	
 	public ArrayList<StartNode> startNodes = new ArrayList<StartNode>(); //an array list for storing the possible colors's start nodes for this maze
 	//smartPossibleColors = reader.possibleColorsForMaze;
-
-	
     private Stack<Character> colorsFilled = new Stack<>(); //stack to keep track of colors completed so we can back track.
 
+
+	int countCounter = 0;
 
     public SmartSolver(int size, String fileName)
     {
@@ -26,7 +25,6 @@ public class SmartSolver extends Solver
 		System.out.println("Started smart solver for maze size: " + size);
         System.out.println("Initial maze: ");
         printMaze(size, maze);
-        
     }
     
     
@@ -55,35 +53,25 @@ public class SmartSolver extends Solver
 			}
 			
 			calcConstraints();
+			//If all constraints are zero, reset the maze
+			boolean allZero = false;
+			for(StartNode n : startNodes)
+			{
+				if(n.constraint != 0)
+				{
+					allZero = true;
+				}
+			}
+			if(allZero == false)
+			{
+				resetMaze();
+				System.out.println("__________________________");
+				System.out.println("Maze reset");
+				printMaze(size, maze);
+			}
 			//pick the most constrained value to use
 			nextColor = getMostConstrained();
 			colorChar = nextColor.value;
-			
-			
-			
-			//error detection where there are more start positions but the maze stil contains _'s
-//			if(colorChar == 'X' || colorChar == 'Z' || colorChar == 'z' || colorChar =='x') 
-//			{
-//				resetMaze();
-//				//reset last and last last values
-//				lastColor.value = 'X';
-//		    	lastLastColor.value = 'Z';
-//		    	
-//				//this time choose a random color to start with.
-//				int randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
-//				nextColor = startNodes.get(randomColor);
-//				//loop while we pick a color that hasn't been finished yet
-//				while(colorsFilled.contains(colorChar))
-//				{	
-//					randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
-//					nextColor = startNodes.get(randomColor);
-//					colorChar = nextColor.value;
-//				}
-//				System.out.println("Random color: " + nextColor.value);
-//				
-//
-//			}
-			
 			
 			//error detection for "back and forth" stuck
 			if(nextColor.value == lastColor.value || nextColor.value == lastLastColor.value)
@@ -92,31 +80,40 @@ public class SmartSolver extends Solver
 				System.out.println(count);
 			}
 			
-			if(count >=6)
+			if(count >= 10)
 			{
 				try{
 					temp = colorsFilled.pop();
-					delete(Character.toLowerCase(colorChar));
+					delete(Character.toLowerCase(temp));
 				}catch(EmptyStackException e)
 				{}
 				try{
 					temp = colorsFilled.pop();
-					delete(Character.toLowerCase(colorChar));
+					delete(Character.toLowerCase(temp));
 				}catch(EmptyStackException e)
 				{}
 				try{
 					temp = colorsFilled.pop();
-					delete(Character.toLowerCase(colorChar));
+					delete(Character.toLowerCase(temp));
 				}catch(EmptyStackException e)
 				{}
 					
+				countCounter++;
 				count = 0; //reset count
+			}
+
+			if(countCounter >= 2)
+			{
+				count = 0;
+				countCounter = 0;
+				resetMaze();
 			}
 			
 			lastLastColor = lastColor;
 			lastColor = nextColor;
 				
-				
+			calcConstraints();
+			nextColor = getMostConstrained();
 
 			System.out.println("the current color is :" + nextColor.value);
 			
@@ -373,75 +370,72 @@ public class SmartSolver extends Solver
             startNodes.add(startQ);
         }
     }
-
-     
     	
-    	
-    	//Method for calculating the constraint values for starting nodes
-    	private void calcConstraints()
-    	{
-    		for (StartNode n : startNodes)
-    		{
-    			int count = 0;
-    			int x = n.x;
-    			int y = n.y;
-    			
-    			try {
-	    			//check north
-	    			if(maze[x-1][y].value == '_')
-	    			{
-	    				count++;
-	    			}
-    			}
-	    		catch(IndexOutOfBoundsException e)
-    			{}
-	    			
-	    		try {
-	    			//check east
-	    			if(maze[x][y+1].value == '_')
-	    			{
-	    				count++;
-	    			}
-	    		}
-	    		catch(IndexOutOfBoundsException e)
-	    		{}
-	    			
-	    		try {
-	    			//check south
-	    			if(maze[x+1][y].value == '_')
-	    			{
-	    				count++;
-	    			}
-	    		}
-	    		catch(IndexOutOfBoundsException e)
-	    		{}
-	    			
-	    		try {
-	    			//check west
-	    			if(maze[x][y-1].value == '_')
-	    			{
-	    				count++;
-	    			}
-	    		}
-	    		catch(IndexOutOfBoundsException e)
-	    		{}
-	    		
-    			n.constraint = count;
-    		}
-    	}
-    	
-    	
-    	//helper method for searching for a char in the maze, return true if the char is in the maze.
-    	private Boolean searchChar(char c)
-    	{
-    		for(int i = 0; i < size; i++)
-			{
-				for(int j = 0; j < size; j++)
+	//Method for calculating the constraint values for starting nodes
+	private void calcConstraints()
+	{
+		for (StartNode n : startNodes)
+		{
+			int count = 0;
+			int x = n.x;
+			int y = n.y;
+			
+			try {
+				//check north
+				if(maze[x-1][y].value == '_')
 				{
-					if(maze[i][j].value == c)
-					{return true;}
+					count++;
 				}
 			}
-    		return false;
-    	}
+			catch(IndexOutOfBoundsException e)
+			{}
+				
+			try {
+				//check east
+				if(maze[x][y+1].value == '_')
+				{
+					count++;
+				}
+			}
+			catch(IndexOutOfBoundsException e)
+			{}
+				
+			try {
+				//check south
+				if(maze[x+1][y].value == '_')
+				{
+					count++;
+				}
+			}
+			catch(IndexOutOfBoundsException e)
+			{}
+				
+			try {
+				//check west
+				if(maze[x][y-1].value == '_')
+				{
+					count++;
+				}
+			}
+			catch(IndexOutOfBoundsException e)
+			{}
+			
+			n.constraint = count;
+		}
+	}
+	
+	
+	//helper method for searching for a char in the maze, return true if the char is in the maze.
+	private Boolean searchChar(char c)
+	{
+		for(int i = 0; i < size; i++)
+		{
+			for(int j = 0; j < size; j++)
+			{
+				if(maze[i][j].value == c)
+				{return true;}
+			}
+		}
+		return false;
+	}
 }
