@@ -3,19 +3,10 @@ public class DumbSolver {
 	final private int size;
 	final private Node[][] maze; //orig maze
 	
-
-	/*TODO:
-	 * 1.) Maze sometimes gets stuck after completing a color, not sure why.
-	 * 	Stuck on print line "<Direction> is <color>."
-	 * 2.) If there are only two colors left, there is an instance where we will 
-	 *  keep adding a specific color to the stack, getting stuck, and popping the color, 
-	 * 	conitinuing to pick the wrong specific color, and constantly adding and popping
-	 *  the same color.
-	 * 3.) 
-	 * 
-	 */
-    private Stack<Character> colorsFilled = new Stack<>(); //stack to keep track of colors completed so we can back track.
-	//public ArrayList<Character> dumbPossibleColors = new ArrayList<Character>();
+	/*	colorsFilled is an uppercase stack to keep track of previous colors
+	*	completed, used for backtracking
+	*/
+    private Stack<Character> colorsFilled = new Stack<>();
 
 	Reader reader = new Reader();
 	Random rand = new Random();
@@ -31,19 +22,20 @@ public class DumbSolver {
 		printMaze(size, maze);
 		this.size = size;
 		this.maze = maze;		
-
 	}
 	
-	
+	//set up solve funcion, calls dumbSearch every time a color is to be completed
 	public void solve() 
 	{
+		/*	once finished is set to true (finish check returns true), while loop breaks
+		*	and solve ends
+		*/
 		boolean finished = false;
 		while(!finished)
 		{
-			//System.out.println("First line inside while(!finished)");
-			if(finishCheck(maze,size)) //finish check for end
+			//finish check for end
+			if(finishCheck(maze,size))
 			{
-				//System.out.println("Inside finishCheck");
 				finished = true;
 				break;
 			}
@@ -51,10 +43,12 @@ public class DumbSolver {
 			//pick a random variable to use
 			int randomColor = rand.nextInt(reader.possibleColorsForMaze.size());
 			
-			//possibleColorsForMaze is uppercase
+			/*	possibleColorsForMaze is an uppercase ArrayList to keep track of 
+			 *	only the colors that are present in the maze we are trying to solve
+			 *	(some mazes have more colors than others)
+			 */
 			char color = reader.possibleColorsForMaze.get(randomColor);
 
-			//colorsFilled is uppercase
 			//loop while we pick a color that hasn't been finished yet
 			while(colorsFilled.contains(color))
 			{	
@@ -62,20 +56,18 @@ public class DumbSolver {
 				color = reader.possibleColorsForMaze.get(randomColor);
 			}
 
+			//set color to uppercase to search through the maze and find the start nodes
 			Character.toUpperCase(color);
-			//System.out.println("Color picked: " + color);
-			
 			for(int i = 0;i <= maze.length - 1; i++)
 			{
 				for(int j = 0; j <= maze[0].length - 1; j++)
 				{
 					if(maze[i][j].value == color && i == reader.getStartX(color) && j == reader.getStartY(color))
 					{
-						//System.out.println("c");
+						//if color gets stuck (dumbSearch == false), 
 						if(dumbSearch(color, i, j) == false)
 						{
-							//System.out.println("d");
-							//delete current color & delete popped color from stack. (lower case only)
+							//delete (lowercase) current color & delete popped color from stack.
 							delete(Character.toLowerCase(color));
 							try{
 								color = colorsFilled.pop();
@@ -113,11 +105,9 @@ public class DumbSolver {
 				}
 			}
 		}
-		//System.out.println("Color deleted: " + color);
-		//printMaze(size, maze);
 	}
 	
-	
+	//Attempt to solve a color randomly, if stuck, break.
 	private boolean dumbSearch(char color, int startx, int starty)
 	{
 		int currentX = startx;
@@ -132,13 +122,15 @@ public class DumbSolver {
 		
 		while(colorFinished == false)
 		{
-			//printMaze(size, maze);
-			//pick a direction.
+			//pick a random direction.
 			int next = rand.nextInt(4); 
+			//loop while we pick a direction we've already checked so no direction is checked twice
 			while(checked.contains(next))
 			{
 				next = rand.nextInt(4);
 			}
+
+			//switch for directions
 			switch(next)
 			{
 				//north	
@@ -216,7 +208,7 @@ public class DumbSolver {
 				break;
 			}
 
-			//if an adjacent node is a finish for the current color.
+			//if an adjacent node is a finish node for the current color.
 			if(colorFinishedCheck(color, currentX, currentY)) 
 			{
 				colorsFilled.add(color);
