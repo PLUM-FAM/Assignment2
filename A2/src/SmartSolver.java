@@ -2,22 +2,18 @@ import java.util.*;
 
 public class SmartSolver extends Solver
 {
-    //final private int size;
-    //final private Node[][] maze;
 
-    /* TODO:
-     * 1.) Run dumbSolver search by picking least constrained for color order.
-     */
-	
-	
 	public ArrayList<Character> smartPossibleColors = new ArrayList<Character>();
-	public ArrayList<StartNode> startNodes = new ArrayList<StartNode>(); //an array list for storing the possible colors's start nodes for this maze
-	//smartPossibleColors = reader.possibleColorsForMaze;
-    private Stack<Character> colorsFilled = new Stack<>(); //stack to keep track of colors completed so we can back track.
-
+	
+	//an array list for storing the possible colors's start nodes for this maze
+	public ArrayList<StartNode> startNodes = new ArrayList<StartNode>(); 
+	
+	//stack to keep track of colors completed so we can back track.	
+	private Stack<Character> colorsFilled = new Stack<>(); 
 
 	int countCounter = 0;
 
+	// SmartSolver Constructor. Takes in size and maze file and prints it out
     public SmartSolver(int size, String fileName)
     {
     	super(size, fileName);
@@ -27,11 +23,15 @@ public class SmartSolver extends Solver
         printMaze(size, maze);
     }
     
-    
+	
+	
     public void solve()
     {
-    	populateStartNodeArray();
-    	StartNode nextColor;
+		populateStartNodeArray();
+		
+		// Tracker Node in order to follow the next color we pick
+		StartNode nextColor;
+		
     	//initialize lastcolor's value to X and Z because they are not valid color values(for this assignment)
     	StartNode lastColor = new StartNode(-1, -1, 100000, 'X'); 
     	StartNode lastLastColor = new StartNode(-1,-1, 100000, 'Z');
@@ -42,10 +42,7 @@ public class SmartSolver extends Solver
     	int count = 0;
 		while(!finished)
 		{
-			//System.out.println("-------------");
-			//printMaze(size,maze);
-			
-			//finish check for end
+			// Start by checking if the maze is solved after every iteration
 			if(finishCheck(maze,size))
 			{
 				finished = true;
@@ -53,8 +50,10 @@ public class SmartSolver extends Solver
 			}
 			
 			calcConstraints();
-			//If all constraints are zero, reset the maze
+
 			boolean allZero = false;
+			
+			// Loop through all the start node contraint values, if any constraint is not 0, set allZero to true
 			for(StartNode n : startNodes)
 			{
 				if(n.constraint != 0)
@@ -62,13 +61,14 @@ public class SmartSolver extends Solver
 					allZero = true;
 				}
 			}
+			
+			// If allZero is false, this means all colors have a contraint value of 0 and the program is unable to choose a next color. Reset the maze 
 			if(allZero == false)
 			{
 				resetMaze();
-				//System.out.println("__________________________");
-				//System.out.println("Maze reset");
-				//printMaze(size, maze);
 			}
+
+
 			//pick the most constrained value to use
 			nextColor = getMostConstrained();
 			colorChar = nextColor.value;
@@ -77,31 +77,32 @@ public class SmartSolver extends Solver
 			if(nextColor.value == lastColor.value || nextColor.value == lastLastColor.value)
 			{
 				count++;
-				//System.out.println(count);
 			}
 			
+			// If stuck in a "back and forth" loop for 10 iterations, back track three colors and iterate again
 			if(count >= 10)
 			{
 				try{
 					temp = colorsFilled.pop();
 					delete(Character.toLowerCase(temp));
-				}catch(EmptyStackException e)
-				{}
+				}catch(EmptyStackException e){}
+
 				try{
 					temp = colorsFilled.pop();
 					delete(Character.toLowerCase(temp));
-				}catch(EmptyStackException e)
-				{}
+				}catch(EmptyStackException e){}
+
 				try{
 					temp = colorsFilled.pop();
 					delete(Character.toLowerCase(temp));
-				}catch(EmptyStackException e)
-				{}
+				}catch(EmptyStackException e){}
+
 					
 				countCounter++;
 				count = 0; //reset count
 			}
-
+			
+			// If you back track three colors due to "back and forth" loops twice, reset the maze and start from the begining 
 			if(countCounter >= 2)
 			{
 				count = 0;
@@ -109,43 +110,43 @@ public class SmartSolver extends Solver
 				resetMaze();
 			}
 			
+			// set the corresponding tracker nodes to the correct iteration values
 			lastLastColor = lastColor;
 			lastColor = nextColor;
 				
 			calcConstraints();
 			nextColor = getMostConstrained();
 
-			//System.out.println("the current color is :" + nextColor.value);
-			
-			
-			
-			
-			
-
-			//set color to uppercase to search through the maze and find the start nodes
+			//set colorChar to uppercase to search through the maze and find the start nodes
 			Character.toUpperCase(colorChar);
+
+
 			for(int i = 0;i <= maze.length - 1; i++)
 			{
 				for(int j = 0; j <= maze[0].length - 1; j++)
 				{
 					if(maze[i][j].value == colorChar && i == reader.getStartX(colorChar) && j == reader.getStartY(colorChar))
 					{
-						//if color gets stuck (dumbSearch == false), 
+						//if color gets stuck (dumbSearch == false) 
 						if(dumbSearch(colorChar, i, j) == false)
 						{
 							//delete (lowercase) current color & delete popped color from stack.
 							delete(Character.toLowerCase(colorChar));
 							try{
+								//pop color off of the colorsFilled stack 
 								colorChar = colorsFilled.pop();
+
+								//delete the lowercase color from the maze 
 								delete(Character.toLowerCase(colorChar));
 							}catch(EmptyStackException e)
 							{
+								// Setting i and j to high values to break out of loops
 								i = 10000;
 								j = 10000;
 							}
-							
 						}	
-						
+
+						// Setting i and j to high values to break out of loops
 						i = 10000;
 						j = 10000;	
 					}
@@ -153,6 +154,8 @@ public class SmartSolver extends Solver
 			}
 		}
 		
+
+		// Print out solved maze
 		System.out.println("Smart Solver Solved Maze : ");
 		printMaze(size, maze);
 		System.out.println("------------------------- ");
@@ -205,8 +208,10 @@ public class SmartSolver extends Solver
   						//add north to checked.
   						checked.add(0);
   					}
-  					break;
-  				case 1: //east
+					  break;
+					  
+				//east
+			    case 1: 
   					if(isFree(currentX, currentY + 1))
   					{
   						//change current x
@@ -223,26 +228,33 @@ public class SmartSolver extends Solver
   						//add east to checked
   						checked.add(1);
   					}
-  					break;
-  				case 2://south
+					  break;
+					  
+				//south
+			    case 2:
   					if(isFree(currentX + 1, currentY))
   					{
   						//change current y
-  						currentX = currentX + 1;
+						  currentX = currentX + 1;
+						  
   						//checked list reset to 0.
-  						checked.clear();
+						  checked.clear();
+						  
   						//set new x and y node value to be the color character
   						maze[currentX][currentY].value = setColor;
   						variableAssignments++;
-  					}
+					  }
+					  
   					//south is not free
   					else
   					{
   						//add south to checked
   						checked.add(2);
   					}
-  					break;
-  				case 3://west
+					  break;
+					  
+			    //west
+				case 3:
   					if(isFree(currentX, currentY - 1))
   					{
   						//change current y
@@ -259,10 +271,11 @@ public class SmartSolver extends Solver
   						//add west to checked
   						checked.add(3);
   					}
+					  break;
+					  
+  				default: 
+  					System.out.println("Default reached");
   					break;
-  			default: 
-  				System.out.println("Default reached");
-  				break;
   			}
 
   			//if an adjacent node is a finish node for the current color.
@@ -297,14 +310,19 @@ public class SmartSolver extends Solver
     //method to return the most constrained startNode or "color" from the list of possible colors.
     public StartNode getMostConstrained()
     {
-    	StartNode lowest = new StartNode(-1, -1, 100000, 'x'); //temporary lowest start node
+		//temporary lowest start node
+		StartNode lowest = new StartNode(-1, -1, 100000, 'x');
+
     	for (StartNode n : startNodes)
     	{
-    		if(!colorsFilled.contains(n))	//if we haven't already done the color
+			//if we haven't already done the color
+			if(!colorsFilled.contains(n))	
     		{
-    			if(n.constraint < lowest.constraint && n.constraint != 0) //if the current node's constraint value is less than the lowest and isn't already solved
+				//if the current node's constraint value is less than the lowest and isn't already solved
+				if(n.constraint < lowest.constraint && n.constraint != 0) 
     			{
-    				lowest = n;				 //set new lowest startNode
+					//set new lowest startNode
+					lowest = n;				
     			}
     		}
     	}
@@ -391,8 +409,7 @@ public class SmartSolver extends Solver
 					count++;
 				}
 			}
-			catch(IndexOutOfBoundsException e)
-			{}
+			catch(IndexOutOfBoundsException e){}
 				
 			try {
 				//check east
@@ -401,8 +418,7 @@ public class SmartSolver extends Solver
 					count++;
 				}
 			}
-			catch(IndexOutOfBoundsException e)
-			{}
+			catch(IndexOutOfBoundsException e){}
 				
 			try {
 				//check south
@@ -411,8 +427,7 @@ public class SmartSolver extends Solver
 					count++;
 				}
 			}
-			catch(IndexOutOfBoundsException e)
-			{}
+			catch(IndexOutOfBoundsException e){}
 				
 			try {
 				//check west
@@ -421,8 +436,7 @@ public class SmartSolver extends Solver
 					count++;
 				}
 			}
-			catch(IndexOutOfBoundsException e)
-			{}
+			catch(IndexOutOfBoundsException e){}
 			
 			n.constraint = count;
 		}

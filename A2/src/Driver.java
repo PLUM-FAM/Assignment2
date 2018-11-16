@@ -21,8 +21,8 @@ public class Driver {
 			long startTime = System.nanoTime();
 			DumbResult.solve();
 			long finishTime = System.nanoTime();
-			System.out.println("Start time: " + startTime);
-			System.out.println("Finish time: " + finishTime);
+			//System.out.println("Start time: " + startTime);
+			//System.out.println("Finish time: " + finishTime);
 			System.out.println("'Dumb' Finish time in Milliseconds " + ((finishTime - startTime) / 1000000));
 			System.out.println("Dumb solver variable assignments: " + DumbResult.variableAssignments);
 		}else if(args[2].equals("s"))
@@ -33,8 +33,8 @@ public class Driver {
 			long startTime = System.nanoTime();
 			smartResult.solve();
 			long finishTime = System.nanoTime();
-			System.out.println("Start time: " + startTime);
-			System.out.println("Finish time: " + finishTime);
+			//System.out.println("Start time: " + startTime);
+			//System.out.println("Finish time: " + finishTime);
 			System.out.println("'Smart' Finish time in Milliseconds " + ((finishTime - startTime) / 1000000));
 			System.out.println("Smart solver variable assignments: " + smartResult.variableAssignments);
 		}else
