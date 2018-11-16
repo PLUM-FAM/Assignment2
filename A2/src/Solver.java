@@ -7,6 +7,8 @@ public class Solver {
 	Random rand = new Random();
     Stack<Character> colorsFilled = new Stack<>();
 
+    int variableAssignments = 0;
+    
 	//parent constructor
 	public Solver(int size, String fileName)
 	{
@@ -106,14 +108,14 @@ public class Solver {
 			{
 				for(Character n : colorsFilled)
 				{
-					System.out.println(n);
+					//System.out.println(n);
 				}
-				System.out.println();
+				//System.out.println();
 				for(Character n : reader.possibleColorsForMaze)
 				{
-					System.out.println(n);
+					//System.out.println(n);
 				}
-				printMaze(size, maze);
+				//printMaze(size, maze);
 				colorsFilled.clear();
 				resetMaze();
 				return false;

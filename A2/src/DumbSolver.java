@@ -119,6 +119,7 @@ public class DumbSolver extends Solver{
 						checked.clear();
 						//set new x and y node value to be the color character
 						maze[currentX][currentY].value = setColor;
+						variableAssignments++;
 					}
 					//north is not free
 					else 
@@ -136,6 +137,7 @@ public class DumbSolver extends Solver{
 						checked.clear();
 						//set new x and y node value to be the color character
 						maze[currentX][currentY].value = setColor;
+						variableAssignments++;
 					}
 					//east is not free
 					else
@@ -153,6 +155,7 @@ public class DumbSolver extends Solver{
 						checked.clear();
 						//set new x and y node value to be the color character
 						maze[currentX][currentY].value = setColor;
+						variableAssignments++;
 					}
 					//south is not free
 					else
@@ -170,6 +173,7 @@ public class DumbSolver extends Solver{
 						checked.clear();
 						//set new x and y node value to be the color character
 						maze[currentX][currentY].value = setColor;
+						variableAssignments++;
 					}
 					//west is not free
 					else

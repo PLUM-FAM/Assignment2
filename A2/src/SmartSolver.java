@@ -42,8 +42,8 @@ public class SmartSolver extends Solver
     	int count = 0;
 		while(!finished)
 		{
-			System.out.println("-------------");
-			printMaze(size,maze);
+			//System.out.println("-------------");
+			//printMaze(size,maze);
 			
 			//finish check for end
 			if(finishCheck(maze,size))
@@ -65,9 +65,9 @@ public class SmartSolver extends Solver
 			if(allZero == false)
 			{
 				resetMaze();
-				System.out.println("__________________________");
-				System.out.println("Maze reset");
-				printMaze(size, maze);
+				//System.out.println("__________________________");
+				//System.out.println("Maze reset");
+				//printMaze(size, maze);
 			}
 			//pick the most constrained value to use
 			nextColor = getMostConstrained();
@@ -77,7 +77,7 @@ public class SmartSolver extends Solver
 			if(nextColor.value == lastColor.value || nextColor.value == lastLastColor.value)
 			{
 				count++;
-				System.out.println(count);
+				//System.out.println(count);
 			}
 			
 			if(count >= 10)
@@ -115,7 +115,7 @@ public class SmartSolver extends Solver
 			calcConstraints();
 			nextColor = getMostConstrained();
 
-			System.out.println("the current color is :" + nextColor.value);
+			//System.out.println("the current color is :" + nextColor.value);
 			
 			
 			
@@ -153,7 +153,7 @@ public class SmartSolver extends Solver
 			}
 		}
 		
-		System.out.println("Dumb Solver Solved Maze : ");
+		System.out.println("Smart Solver Solved Maze : ");
 		printMaze(size, maze);
 		System.out.println("------------------------- ");
     }
@@ -197,6 +197,7 @@ public class SmartSolver extends Solver
   						checked.clear();
   						//set new x and y node value to be the color character
   						maze[currentX][currentY].value = setColor;
+  						variableAssignments++;
   					}
   					//north is not free
   					else 
@@ -214,6 +215,7 @@ public class SmartSolver extends Solver
   						checked.clear();
   						//set new x and y node value to be the color character
   						maze[currentX][currentY].value = setColor;
+  						variableAssignments++;
   					}
   					//east is not free
   					else
@@ -231,6 +233,7 @@ public class SmartSolver extends Solver
   						checked.clear();
   						//set new x and y node value to be the color character
   						maze[currentX][currentY].value = setColor;
+  						variableAssignments++;
   					}
   					//south is not free
   					else
@@ -248,6 +251,7 @@ public class SmartSolver extends Solver
   						checked.clear();
   						//set new x and y node value to be the color character
   						maze[currentX][currentY].value = setColor;
+  						variableAssignments++;
   					}
   					//west is not free
   					else
