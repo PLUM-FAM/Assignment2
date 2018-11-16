@@ -7,13 +7,14 @@ import java.util.Scanner;
 
 public class Reader 
 {
-	Node[][] maze;
+	Node[][] maze; //2d array to hold an instance of the maze
 	int width;
 	int height;
-	public ArrayList<Character> possibleColorsForMaze = new ArrayList<Character>();
+	public ArrayList<Character> possibleColorsForMaze = new ArrayList<Character>(); //hold all of the possible colors to utilize later.
 	String fileName;
-	int size = 0;
+	int size = 0; //maze size;
 
+	//initialize all possible start colors (all possible comes from the assignment description)
 	int[] startB = new int[2];
 	int[] startA = new int[2];
 	int[] startW = new int[2];
@@ -26,11 +27,16 @@ public class Reader
 	int[] startY = new int[2];
 	int[] startQ = new int[2];
 	
+	/*
+	 * constructor for this class
+	 */
 	public Reader()
 	{
-		
 	}
 
+	/*
+	 * getStartx is a helper method to return the x coord of the start node for an inputted color
+	 */
 	public int getStartX(char color)
 	{
 		switch(color)
@@ -73,6 +79,9 @@ public class Reader
 		}
 	}
 
+	/*
+	 * getStartY is a helper method to return the y coord of the start node for an inputted color
+	 */
 	public int getStartY(char color)
 	{
 		switch(color)
@@ -115,6 +124,11 @@ public class Reader
 		}
 	}
 	
+	
+	/*
+	 * read in a file space by space and line by line in order to create a 2d array of nodes which represents the "maze"
+	 * Also set the possible colors for maze based on the capitol letters the scanning comes across.
+	 */
 	public Node[][] readFile(String filename, int size)
 	{
 		try {			
@@ -130,19 +144,15 @@ public class Reader
 					for(int j = 0; j < height; j++)
 					{
 						char value = line.charAt(j); //the next spot in the 2D array is the next character in the text file.
-						//ArrayList<Character> possible = new ArrayList<Character>(); //possible colors for the current node. initially empty
 						maze[i][j] = new Node(i,j, value);
 						
 						if(maze[i][j].value != '_')
 						{
-							//System.out.println(maze[i][j].value);
-							//System.out.println(possibleColorsForMaze.contains(maze[i][j].value));
+							
 							if(possibleColorsForMaze.contains(maze[i][j].value) != true) //if not already added
 							{
-								//System.out.println("entered if");
 								//add to list of possible colors for this maze
 								possibleColorsForMaze.add(maze[i][j].value);
-								//System.out.println(possibleColorsForMaze.size());
 								switch(maze[i][j].value)
 								{
 									case 'B':
@@ -208,24 +218,9 @@ public class Reader
 						}
 					}
 				}
-				
-				//set possible values for each node based on the colors used in the maze
-				// for(int i = 0; i < width; i++)
-				// {
-				// 	for(int j = 0; j < height; j++)
-				// 	{
-				// 		if(maze[i][j].value != '_') //sets for EVERYTHING but _ 
-				// 		{
-				// 			for(int l = 0; l < (possibleColorsForMaze.size()); l++)
-				// 			{
-				// 				maze[i][j].possible.add(possibleColorsForMaze.get(l));
-				// 			}
-				// 		}
-				// 	}
-				// }		
 			}
 			
-			catch(IOException e)
+			catch(IOException e) //catch if file name is incorrect or not found
 			{
 				System.out.println("Error reading file");
 			}

@@ -190,7 +190,6 @@ public class DumbSolver extends Solver{
 			//if an adjacent node is a finish node for the current color.
 			if(colorFinishedCheck(color, currentX, currentY)) 
 			{
-				//colorsFilled.add(color);
 				colorFinished = true;
 				return true;
 			}
