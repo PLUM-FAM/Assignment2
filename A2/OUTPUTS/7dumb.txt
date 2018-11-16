@@ -1,0 +1,30 @@
+loaded 7x7maze.txt
+size = 7
+Solving with dumb solver
+---------------------------------- 
+Started dumb solver for maze size: 7
+Initial maze: 
+
+Maze 7: 
+___O___
+_B__GY_
+___BR__
+___Y___
+_______
+__R____
+G___O__
+
+Dumb Solver Solved Maze : 
+
+Maze 7: 
+gggOooo
+gBggGYo
+gbbBRyo
+gyyYryo
+gyrrryo
+gyRyyyo
+GyyyOoo
+
+------------------------- 
+'Dumb' Finish time in Milliseconds 129
+Dumb solver variable assignments: 135316

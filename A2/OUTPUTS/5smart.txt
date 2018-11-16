@@ -1,0 +1,26 @@
+loaded 5x5maze.txt
+size = 5
+Solving with smart solver
+---------------------------------- 
+Started smart solver for maze size: 5
+Initial maze: 
+
+Maze 5: 
+B__RO
+___Y_
+__Y__
+_RO_G
+_BG__
+
+Smart Solver Solved Maze : 
+
+Maze 5: 
+BrrRO
+bryYo
+brYoo
+bROoG
+bBGgg
+
+------------------------- 
+'Smart' Finish time in Milliseconds 10
+Smart solver variable assignments: 112

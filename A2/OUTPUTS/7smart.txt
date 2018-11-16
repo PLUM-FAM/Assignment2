@@ -1,0 +1,30 @@
+loaded 7x7maze.txt
+size = 7
+Solving with smart solver
+---------------------------------- 
+Started smart solver for maze size: 7
+Initial maze: 
+
+Maze 7: 
+___O___
+_B__GY_
+___BR__
+___Y___
+_______
+__R____
+G___O__
+
+Smart Solver Solved Maze : 
+
+Maze 7: 
+gggOooo
+gBggGYo
+gbbBRyo
+gyyYryo
+gyrrryo
+gyRyyyo
+GyyyOoo
+
+------------------------- 
+'Smart' Finish time in Milliseconds 103
+Smart solver variable assignments: 102730
